@@ -1,0 +1,13 @@
+.header {
+    background:white;
+    border:none;
+    display: flex;
+
+    .h-container {
+        flex:1;
+    }
+
+    .h-container > h1 {
+        font-size: large;
+    }
+}
