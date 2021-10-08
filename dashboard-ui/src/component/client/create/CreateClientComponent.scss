@@ -1,0 +1,21 @@
+#nest-messages {
+    max-width:500px;
+    margin:0 auto;
+    margin-top:2rem;
+
+}
+
+.content-section {
+    display: flex;
+    align-items: center;
+
+}
+
+.content-section > div ,form , h1 {
+    width:33%;
+}
+
+.createClient-footer {
+    display: flex;
+    justify-content: center;
+}

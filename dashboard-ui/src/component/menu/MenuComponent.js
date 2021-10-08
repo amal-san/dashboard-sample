@@ -9,7 +9,8 @@ const MenuComponent = () => {
     const [ collapse , setCollapse ] = useState(false)
 
     return (
-        <Sider 
+        <Sider
+            className="menu"
             theme="dark"
             reverseArrow={true}
             collapsible 

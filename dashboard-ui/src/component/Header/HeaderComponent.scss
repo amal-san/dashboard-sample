@@ -2,9 +2,13 @@
     background:white;
     border:none;
     display: flex;
+    padding:10px;
+    margin-bottom: 1rem;
 
     .h-container {
-        flex:1;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
     }
 
     .h-container > h1 {
