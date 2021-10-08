@@ -93,6 +93,7 @@ mutation updateClient($name:String! $age:String! $address:String $dob:String $ph
     updateClient(name:$name age:$age address:$address dob:$dob phone:$phone){
      _id
      name
+     age
      address
      dob
      phone

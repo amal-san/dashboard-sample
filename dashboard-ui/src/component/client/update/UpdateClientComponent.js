@@ -96,29 +96,13 @@
 // }
 
 
-// const mapStateToProps = state => {
-//   return {
-//     data:state.updateClient.updateClientResults,
-//     users:state.getClient.getClientResults.Clients,
-//     error:state.updateClient.updateClientError,
-//     loading:state.updateClient.updateClientLoading,
-//     active:state.updateClient.updateClientActive,
-//   }
-// }
-
-
-// const mapDispatchToProps = {
-//   updateClientRequest,
-//   updateClientDefault,
-// }
-
-
-// export default connect(mapStateToProps, mapDispatchToProps)(UpdateClient);
 
 
 import React, { useState } from 'react';
 import { Form, Modal, Input, InputNumber, DatePicker, Button} from 'antd';
 import './UpdateClientComponent.scss'
+import { getClientDefault, updateClientRequest } from '../../../redux/client/Client.action';
+import { connect } from 'react-redux';
 
 
 const layout = {
@@ -135,7 +119,7 @@ const validateMessages = {
 }
 
 
-const UpdateClient = ({ name, age , address, phone ,dob }) => {
+const UpdateClient = ({ name, age , address, phone ,dob , updateClientRequest }) => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
@@ -143,19 +127,31 @@ const UpdateClient = ({ name, age , address, phone ,dob }) => {
 
   
   const onSubmit = (initialValues) => {
+    setIsLoading(true)
     form.submit();
   }
-  const onFinish = () => {
 
-  }
+  const onFinish = (initialValues) => {
+
+    var formatDate = "DD.MM.YYYY";
+    let client = initialValues.client
+      let body = { 
+        name: client.name,
+        age:String(client.age),
+        address:client.address,
+        dob:client.dob.format(formatDate),
+        phone:client.phone
+      } 
+    updateClientRequest(body)
+    getClientDefault()
+    setIsLoading(false)
+    form.resetFields();
+    setIsModalVisible(false)
+  };
 
 
   const showModal = () => {
     setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
   };
 
   const handleCancel = () => {
@@ -167,7 +163,7 @@ const UpdateClient = ({ name, age , address, phone ,dob }) => {
       <Button type="secondary" onClick={showModal}>
         Edit
       </Button>
-      <Modal title="Edit Details" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal footer={[]} title="Edit Details" visible={isModalVisible} onCancel={handleCancel}>
          <Form form={form} name="control-hooks" {...layout} name="nest-messages" validateMessages={validateMessages} onFinish={onFinish}>
           <Form.Item
             name={['client', 'name']}
@@ -224,4 +220,12 @@ const UpdateClient = ({ name, age , address, phone ,dob }) => {
 };
 
 
-export default UpdateClient
+
+const mapDispatchToProps = {
+  updateClientRequest,
+  getClientDefault
+}
+
+
+export default connect(null, mapDispatchToProps)(UpdateClient);
+

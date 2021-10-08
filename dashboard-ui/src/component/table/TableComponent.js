@@ -59,7 +59,7 @@ const TableComponent = (props) => {
 
     useEffect(() => {
         getClientRequest();
-    },[])
+    },[loading])
 
     return (
             <Table className="table" rowKey={(client) => client.name} columns={columns}   dataSource={data ? data.Clients: null} />)
