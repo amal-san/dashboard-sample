@@ -1,21 +1,21 @@
 import { Button } from "antd"
+import { useState } from "react"
 import { connect } from "react-redux"
 import { createClientDefault , updateClientDefault} from "../../redux/client/Client.action"
 
 
 const AddUser = (props) => {
 
+    const [ text , setText ] = useState('ADD USER')
+
     const click = () => {
-        if(!props.create) {
-            props.createClientDefault();
-            if(props.update)
-                props.updateClientDefault();
-        }
+        text === 'CLEAR' ? setText('ADD USER') : setText("CLEAR")
+        props.createClientDefault();
         
     }
     return (
         <div className="add-user">
-            <Button type="primary" onClick={(e) => click()}> ADD USER </Button>
+            <Button type="primary" onClick={(e) => click(e)}> {text} </Button>
         </div>
     )
 }

@@ -26,9 +26,7 @@ function App() {
         <Layout>
           <Header><HeaderComponent name='dashboard' /></Header>
           <Content><TableComponent/></Content>
-          <UpdateClient/>
           <CreateClient/>
-          <Footer>Footer</Footer>
         </Layout>
       </Layout>
     </Provider>

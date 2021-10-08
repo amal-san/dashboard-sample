@@ -2,7 +2,7 @@ import { Form, Input, InputNumber, DatePicker, Button} from 'antd';
 import { useState } from 'react';
 import './CreateClientComponent.scss'
 import { connect } from 'react-redux'
-import { createClientDefault, createClientRequest } from '../../../redux/client/Client.action';
+import { createClientDefault, createClientRequest, getClientDefault, getClientRequest } from '../../../redux/client/Client.action';
 
 
 const layout = {
@@ -43,15 +43,18 @@ const CreateClient = (props) => {
         phone:client.phone
       } 
     createClientRequest(body)
+    getClientRequest()
     setIsLoading(true)
     form.resetFields();
+    setIsLoading(false)
+
   };
 
 
     return ( 
         <div className="content-section" style={{display: active ? '': 'none'}}>
-        <h1 style={{textAlign:'center',marginTop:'1rem'}} onClick={() => createClientDefault()}> CREATE USER </h1>
-        <Form form={form} name="control-hooks" {...layout} name="nest-messages" validateMessages={validateMessages} onFinish={onFinish}>
+        <h1 className="create" style={{textAlign:'center',marginTop:'1rem'}} onClick={() => createClientDefault()}> CREATE USER </h1>
+        <Form form={form} className="create" name="control-hooks" {...layout} name="nest-messages" validateMessages={validateMessages} onFinish={onFinish}>
         <Form.Item
           name={['client', 'name']}
           label="Name"
@@ -92,7 +95,7 @@ const CreateClient = (props) => {
           <DatePicker/>
         </Form.Item>
       </Form>
-      <div className="createClient-footer">
+      <div className="createClient-footer create">
         <Button onClick={onSubmit} loading={isLoading} type="primary">Submit</Button>
       </div>
       </div>
@@ -115,6 +118,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   createClientRequest,
   createClientDefault,
+  getClientRequest
 }
 
 

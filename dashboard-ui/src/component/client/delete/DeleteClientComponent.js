@@ -1,16 +1,20 @@
 import './DeleteClientComponent.scss'
 import { connect } from 'react-redux'
-import { deleteClientDefault, deleteClientRequest } from '../../../redux/client/Client.action';
+import { deleteClientDefault, deleteClientRequest, getClientRequest } from '../../../redux/client/Client.action';
 
 
 import { Popconfirm, message } from 'antd';
 
 const DeleteClient = (props) => {
 
-    let { name } = props;
+    let { name, deleteClientRequest, getClientRequest } = props;
 
     const confirm = (name) => {
-        console.log(name)
+        const body = {
+            name:name
+        }
+        deleteClientRequest(body)
+        getClientRequest()
     }
 
     return (
@@ -25,24 +29,12 @@ const DeleteClient = (props) => {
     )
 }
 
-export default DeleteClient;
+
+const mapDispatchToProps = {
+  getClientRequest,
+  deleteClientRequest
+}
 
 
-// const mapStateToProps = state => {
-//   return {
-//     data:state.updateClient.updateClientResults,
-//     error:state.updateClient.updateClientError,
-//     loading:state.updateClient.updateClientLoading,
-//     active:state.updateClient.updateClientActive,
-//   }
-// }
-
-
-// const mapDispatchToProps = {
-//   updateClientRequest,
-//   updateClientDefault,
-// }
-
-
-// export default connect(mapStateToProps, mapDispatchToProps)(UpdateClient);
+export default connect(null, mapDispatchToProps)(DeleteClient);
 

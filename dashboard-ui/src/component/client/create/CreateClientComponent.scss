@@ -8,11 +8,14 @@
 .content-section {
     display: flex;
     align-items: center;
+    margin-top: 2rem;
 
 }
 
-.content-section > div ,form , h1 {
-    width:33%;
+.content-section {
+     .create{
+        width:33%;
+     }
 }
 
 .createClient-footer {

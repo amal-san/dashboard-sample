@@ -130,8 +130,49 @@ function* updateClient(body) {
     yield takeEvery(actions.Types.UPDATE_CLIENT_REQUEST, updateClient);
 }
 
+
+const DELETE_CLIENT = gql` 
+mutation deleteClient($name:String!) {
+    deleteClient(name:$name){
+     _id
+     name
+     address
+     dob
+     phone
+  }
+}`
+
+const deleteClientApi = (parms) => {
+    return axios.post('/', {
+        query:print(DELETE_CLIENT),
+        variables: {
+            name:parms.name,
+        },
+        headers:{
+            'Content-Type': 'application/json',
+
+        }
+    });
+};
+
+function* deleteClient(body) {
+    try {
+      const result = yield call(deleteClientApi,body.body);
+      if(result.data.errors) throw result.data.errors
+      yield put(actions.deleteClientSuccess(result.data.data));
+    } catch (error) {
+      yield put(actions.deleteClientError(error))
+    }
+  }
+  
+  function* DeleteClientSaga() {
+    yield takeEvery(actions.Types.DELETE_CLIENT_REQUEST, deleteClient);
+}
+
+
 export {
     GetClientSaga,
     CreateClientSaga,
-    UpdateClientSaga
+    UpdateClientSaga,
+    DeleteClientSaga
 }

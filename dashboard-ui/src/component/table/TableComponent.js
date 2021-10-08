@@ -44,7 +44,7 @@ const columns = [
     title: 'Action',
     key: 'action',
     render: (text, client) => (
-      <UpdateAndDelete name={client.name}/>
+      <UpdateAndDelete {...client}/>
     ),
   },
 ];
@@ -62,7 +62,7 @@ const TableComponent = (props) => {
     },[])
 
     return (
-            <Table className="table" rowKey={(client) => client.name} columns={columns}   dataSource={data.Clients} />)
+            <Table className="table" rowKey={(client) => client.name} columns={columns}   dataSource={data ? data.Clients: null} />)
     }
 
 

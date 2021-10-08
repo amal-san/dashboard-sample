@@ -2,20 +2,14 @@ import { Table, Tag, Space } from 'antd';
 import { connect } from 'react-redux';
 import { createClientDefault, updateClientDefault } from '../../redux/client/Client.action';
 import DeleteClient from '../client/delete/DeleteClientComponent';
+import UpdateClient from '../client/update/UpdateClientComponent';
 
 const UpdateAndDelete = (props) => {
 
 
-    const onUpdate = () => {
-        if(props.create)
-            props.createClientDefault();
-        props.updateClientDefault();
-        
-
-    }
     return (
       <Space size="middle">
-        <a onClick={() => onUpdate()}>Update</a>
+        <UpdateClient {...props}/>
         <DeleteClient name={props.name}/>
       </Space>
     )
