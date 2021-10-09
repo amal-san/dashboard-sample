@@ -6,16 +6,18 @@ import { createClientDefault , updateClientDefault} from "../../redux/client/Cli
 
 const AddUser = (props) => {
 
-    const [ text , setText ] = useState('ADD USER')
+    const [ show , setShow ] = useState(false)
+
+
 
     const click = () => {
-        text === 'CLEAR' ? setText('ADD USER') : setText("CLEAR")
         props.createClientDefault();
+        setShow(!show)
         
     }
     return (
         <div className="add-user">
-            <Button type="primary" onClick={(e) => click(e)}> {text} </Button>
+            <Button type="primary" onClick={(e) => click(e)}> ADD USER </Button>
         </div>
     )
 }
@@ -29,7 +31,7 @@ const mapDispatchToProps = {
 const mapStateToProps = state => {
     return {
       create:state.createClient.createClientActive,
-      update:state.updateClient.updateClientActive,
+      update:state.updateClient.updateClientResults,
     }
   }
   

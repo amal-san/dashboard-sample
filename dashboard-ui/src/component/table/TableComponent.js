@@ -29,16 +29,20 @@ const columns = [
     title: 'Address',
     dataIndex: 'address',
     key: 'address',
+    render: text =><span>{text ? (text.length > 5 ? text.slice(0,6) + '...' : text) :null}</span>
+
   },
   {
     title: 'Date of Birth',
     dataIndex: 'dob',
     key: 'dob',
+
   },
   {
     title: 'Phone',
     dataIndex: 'phone',
     key: 'phone',
+    render: text =><span>{text ? text.slice(0,10): null}</span>
   },
   {
     title: 'Action',
@@ -59,10 +63,10 @@ const TableComponent = (props) => {
 
     useEffect(() => {
         getClientRequest();
-    },[loading])
+    },[])
 
     return (
-            <Table className="table" rowKey={(client) => client.name} columns={columns}   dataSource={data ? data.Clients: null} />)
+            <Table responsive={'760'} className="table" rowKey={(client) => client.name} columns={columns}   dataSource={data ? data.Clients: null} />)
     }
 
 

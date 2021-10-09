@@ -8,6 +8,7 @@ import CreateClient from './component/client/create/CreateClientComponent';
 import UpdateClient from './component/client/update/UpdateClientComponent';
 import axios from 'axios'
 import AddUser from './component/add/AddUserComponent';
+import LineGraph from './component/chart/ChartComponent';
 
 
 
@@ -25,6 +26,8 @@ function App() {
         <MenuComponent />
         <Layout>
           <Header><HeaderComponent name='dashboard' /></Header>
+          <LineGraph/>
+          <h2 style={{textAlign:'center'}}>Users</h2>
           <Content><TableComponent/></Content>
           <CreateClient/>
         </Layout>

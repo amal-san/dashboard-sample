@@ -1,3 +1,30 @@
 .table {
     margin-top:20px;
 }
+
+.graph {
+    max-width:70%; 
+    margin:5%;
+}
+
+@media only screen and (max-width: 600px) {
+    .table {
+        width:100%;
+        overflow: auto hidden;
+        background:white;
+    }
+    .ant-layout-sider {
+        display: none;
+    }
+    .content-section {
+        flex-direction: column;
+    }
+    .content-section .create {
+        width:auto!important;
+        padding:5%;
+    }
+    .graph {
+        max-width: 100%;
+        margin:1%;
+    }
+}

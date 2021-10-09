@@ -101,8 +101,10 @@
 import React, { useState } from 'react';
 import { Form, Modal, Input, InputNumber, DatePicker, Button} from 'antd';
 import './UpdateClientComponent.scss'
-import { getClientDefault, updateClientRequest } from '../../../redux/client/Client.action';
+import { getClientDefault, getClientRequest, updateClientRequest } from '../../../redux/client/Client.action';
 import { connect } from 'react-redux';
+import * as moment from 'moment';
+
 
 
 const layout = {
@@ -119,38 +121,47 @@ const validateMessages = {
 }
 
 
-const UpdateClient = ({ name, age , address, phone ,dob , updateClientRequest }) => {
+const UpdateClient = ({ name, age , address, phone ,dob , getClientRequest, updateClientRequest }) => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
   const[ isLoading ,setIsLoading ] = useState(false);
+  var formatDate = "DD.MM.YYYY";
+
+
+
 
   
   const onSubmit = (initialValues) => {
-    setIsLoading(true)
     form.submit();
   }
 
   const onFinish = (initialValues) => {
-
-    var formatDate = "DD.MM.YYYY";
+    setIsLoading(true)
     let client = initialValues.client
-      let body = { 
+
+    if(!initialValues.client.age){
+      console.log(initialValues.client)
+      return;
+    }    
+    let body = { 
         name: client.name,
         age:String(client.age),
-        address:client.address,
-        dob:client.dob.format(formatDate),
-        phone:client.phone
-      } 
+        address:client.address ? client.address : null,
+        dob:client.dob ? client.dob.format(formatDate) : null,
+        phone:client.phone ? client.phone : null,
+      }
     updateClientRequest(body)
-    getClientDefault()
+    setTimeout(() => {
+      getClientRequest();
+    },1000)
     setIsLoading(false)
-    form.resetFields();
     setIsModalVisible(false)
   };
 
 
   const showModal = () => {
+    getClientRequest();
     setIsModalVisible(true);
   };
 
@@ -188,7 +199,7 @@ const UpdateClient = ({ name, age , address, phone ,dob , updateClientRequest })
               },
             ]}
           >
-            <InputNumber />
+            <InputNumber min={1} max={100} />
           </Form.Item>
           <Form.Item
             name={['client', 'phone']}
@@ -204,11 +215,14 @@ const UpdateClient = ({ name, age , address, phone ,dob , updateClientRequest })
           >
             <Input.TextArea />
           </Form.Item>
-          <Form.Item name={['client', 'dob']}
+          <Form.Item 
+            name={['client', 'dob']}
+            format={formatDate}       
             label="Date of Birth"
-            initialValue={null}
+            initialValue = {moment(dob, formatDate)}
+            extra="format: DD.MM.YYYY"  
           >
-            <DatePicker />
+            <DatePicker format={formatDate} />
           </Form.Item>
         </Form>
         <div className="updateClient-footer">
@@ -223,7 +237,8 @@ const UpdateClient = ({ name, age , address, phone ,dob , updateClientRequest })
 
 const mapDispatchToProps = {
   updateClientRequest,
-  getClientDefault
+  getClientDefault,
+  getClientRequest
 }
 
 

@@ -20,7 +20,7 @@ const validateMessages = {
 
 const CreateClient = (props) => {
 
-  const { createClientRequest, createClientDefault, error , data , active } = props;
+  const { createClientRequest, getClientRequest, createClientDefault, error , data , active } = props;
 
 
   const [form] = Form.useForm();
@@ -33,6 +33,7 @@ const CreateClient = (props) => {
 
 
   const onFinish = (values) => {
+    setIsLoading(true)
     var formatDate = "DD.MM.YYYY";
     let client = values.client
       let body = { 
@@ -43,8 +44,9 @@ const CreateClient = (props) => {
         phone:client.phone
       } 
     createClientRequest(body)
-    getClientRequest()
-    setIsLoading(true)
+    setTimeout(() => {
+      getClientRequest();
+    },1000)
     form.resetFields();
     setIsLoading(false)
 
@@ -53,7 +55,7 @@ const CreateClient = (props) => {
 
     return ( 
         <div className="content-section" style={{display: active ? '': 'none'}}>
-        <h1 className="create" style={{textAlign:'center',marginTop:'1rem'}} onClick={() => createClientDefault()}> CREATE USER </h1>
+        <h1 className="create" style={{textAlign:'center',marginTop:'1rem'}}> CREATE USER </h1>
         <Form form={form} className="create" name="control-hooks" {...layout} name="nest-messages" validateMessages={validateMessages} onFinish={onFinish}>
         <Form.Item
           name={['client', 'name']}
@@ -81,6 +83,7 @@ const CreateClient = (props) => {
         <Form.Item
           name={['client', 'phone']}
           label="Phone"
+          maxLength={10}
         >
           <Input/>
         </Form.Item>
